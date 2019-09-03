@@ -1,0 +1,61 @@
+                                          Interrupt Handling
+ OBJECTIVES:
+ 
+ Learn about the use of INTERRUPTS
+ 
+ Learn how to enable an interrupt source a RISC V microprocessor, and write an interrupt service routine (ISR) that is triggered when a button is pressed.
+
+
+ INTERRUPTS:
+ 
+ Main program is running normally. When an interrupt occurs it switches context to the ISR to handle the event. 
+
+  
+ IMPORTANT REGISTERS:
+ 
+ Machine-mode Status Register (mstatus): 
+ A special register that belongs to Control and Status Registers (CSRs) which requires specific instructions to manipulate them such as csrri instruction.
+ 
+ Used to enable interrupts globally
+  
+ Set the Machine Interrupt Enable (MIE) bit in the mstatus using this instruction csrrsi zero, mstatus, 0x08 
+ This will set the bit-3 MIE in the mstatus register. 
+
+Machine Interrupt Enable Mask (MEIMASK): 
+Another CSR but specific to our core thus is defined by its number 0x7C0 rather than its name. 
+
+Our core has 32 interrupt lines, line-0 for jtag interrupt, line-1 for push buttons and other lines are not connected.
+
+To enable the push buttons interrupt, we have to set bit-1.
+
+csrrsi zero, 0x7C0, 0x02 will set the bit-1 in the MEIMASK register.
+
+We need to enable interrupt for specific push button
+Access the four LSBs in Interruptmask
+Address = offset (2 *4) + base address
+
+We need to clear the interrupt after servicing it
+Write any value in Edgecapture (1)
+Address = offset (3*4) + base address
+
+
+IMPLEMENTATION
+
+Set S0 to 0
+
+Flash all LEDs with frequency = 1 HZ
+
+Loop doing previous step until S0 value is non-zero. Also, call the random number generator in every loop iteration to update a0.
+
+When INT0 button is pressed, the ISR runs and sets S0 with a random value between 50-250 generated from a0.
+
+Once S0 is non-zero, its value will be displayed on the LEDs every 1 second. Every 1 second S0 will be decremented by 10.
+
+If decrementing will make S0 ≤ 0, then Set S0 to 0 and start flashing LED again.
+
+Your delay function resolution is 0.1sec
+
+
+
+
+
