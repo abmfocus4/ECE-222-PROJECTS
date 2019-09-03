@@ -1,0 +1,33 @@
+                                                  REFLEX METER
+                                                  
+   OBJECTIVES OF THIS PROJECT :
+   
+   Learn how to use peripherals connected to the microprocessor. 
+
+   Any CPU is connected to the outside world using Ports
+
+   DEMONSTRATION:
+   
+   A simple counter from 0x00 to 0xFF and display them on the 8 LEDs. Note that you have 100ms delay between every two consecutive numbers
+
+   Reflex meter
+   
+   
+   REFLEX METER STEPS:
+   
+   Turn off the LEDs
+   
+   Call the pseudorandom subroutine to generate a 16-bit value
+   
+   Map the returned value to a 2-10 seconds delay using a 100us resolution (counting every 100us) 
+   
+   Execute your delay then turn most significant LED ON and start your reflex counter 
+   
+   Reflex counter increments every 100us (polling resolution
+   
+   Once a button is pushed, stop counting, break loop
+   
+   Display the 32-bit counter on the 8 LEDs. (2 seconds between every byte and 5 seconds between every word)  Repeat step
+
+   
+   
